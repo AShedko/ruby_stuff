@@ -1,2 +1,2 @@
-# ruby_stuff
-hometasks & other junk
+## Ruby stuff
+Hometasks, projects, etc
