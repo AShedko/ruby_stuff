@@ -24,21 +24,20 @@ describe Queue do
 
   context "Особенности работы с пустой и полностью заполненной очередью:" do
     it "из пустой очереди нельзя ничего извлечь" do
-      expect{queue.dequeue}.to raise_error(RuntimeError, "Queue is empty")
+      expect { queue.dequeue }.to raise_error(RuntimeError, 'Queue is empty')
     end
 
     it "у пустого стека ничего не лежит на вершине" do
-      expect{queue.front}.to raise_error(RuntimeError, "Queue is empty")
+      expect { queue.front }.to raise_error(RuntimeError, 'Queue is empty')
     end
 
     it "в пустую очередь можно положить лишь ограниченное число элементов" do
-      queue::DEF_SIZE.times{queue.enqueue(17)}
-      expect{queue.enqueue(17)}.to raise_error(RuntimeError, "Queue is full")
+      queue.empty
+      Queue::DEF_SIZE.times { queue.enqueue(85) }
+      expect { queue.enqueue(17) }.to raise_error(RuntimeError, 'Queue is full')
     end
   end
-  context " особенности кольцевой реализации"  do
-    it "TODO!"  
-  end
+
   context "Особенности дисциплины обслуживания FIFO:" do
     it "первым пришёл - последним ушёл" do
       queue.enqueue(17)

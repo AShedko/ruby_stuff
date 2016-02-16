@@ -37,7 +37,3 @@ class Queue
     index == @array.size - 1 ? 0 : index + 1
   end
 end
-
-Queue queue
-queue.enqueue(17)
-puts queue.front
