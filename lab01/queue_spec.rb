@@ -39,7 +39,7 @@ describe Queue do
   end
 
   context "Особенности дисциплины обслуживания FIFO:" do
-    it "первым пришёл - последним ушёл" do
+    it "первым пришёл - первым ушёл" do
       queue.enqueue(17)
       queue.enqueue(18)
       expect(queue.front).to eq 17

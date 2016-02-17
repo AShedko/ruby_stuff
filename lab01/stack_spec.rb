@@ -32,8 +32,8 @@ describe Stack do
     end
 
     it "в пустой стек можно положить лишь ограниченное число элементов" do
-      Stack::DEF_SIZE.times{stack.push(17)}
-      expect{stack.push(17)}.to raise_error(RuntimeError, "Stack is full")
+      Stack::DEF_SIZE.times{ stack.push(17) }
+      expect{ stack.push(17) }.to raise_error(RuntimeError, " Stack is full" )
     end
   end
 

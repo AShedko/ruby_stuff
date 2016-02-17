@@ -51,17 +51,17 @@ describe DblStack do
     end
 
     it "у пустого стека ничего не лежит на вершине" do
-      expect { stack.top(0)}.to raise_error(RuntimeError, "Stack is empty")
-      expect { stack.top(1)}.to raise_error(RuntimeError, "Stack is empty")
+      expect { stack.top(0) }.to raise_error(RuntimeError, "Stack is empty")
+      expect { stack.top(1) }.to raise_error(RuntimeError, "Stack is empty")
     end
 
     it "в пустой стек можно положить лишь ограниченное число элементов слева" do
-      DblStack::DEF_SIZE.times{ stack.push(0, 17)}
-      expect{ stack.push(0,17) }.to raise_error(RuntimeError, "Stacks are full")
+      DblStack::DEF_SIZE.times { stack.push(0, 17) }
+      expect{ stack.push(0, 17) }.to raise_error(RuntimeError, "Stacks are full")
     end
     it "в пустой стек можно положить лишь ограниченное число элементов справа" do
-      DblStack::DEF_SIZE.times { stack.push(1, 17)}
-      expect { stack.push(1,17) }.to raise_error(RuntimeError, "Stacks are full")
+      DblStack::DEF_SIZE.times { stack.push(1, 17) }
+      expect { stack.push(1, 17) }.to raise_error(RuntimeError, "Stacks are full")
     end
 
     it "в пустой стек можно положить лишь ограниченное число элементов справа и справа" do
