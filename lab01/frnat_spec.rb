@@ -31,7 +31,7 @@ describe FrNat do
   end
   context 'Testing the maximum element' do
     it 'max value exception' do
-      expect(nums.add(FrNat::DEF_MAX+1)).to raise_error('Max value error')
+      expect { nums.add(FrNat::DEF_MAX+1) }.to raise_error(RuntimeError, 'Max value error')
     end
   end
 end

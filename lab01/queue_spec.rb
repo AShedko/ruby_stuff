@@ -6,7 +6,7 @@ describe Queue do
   let(:queue) { Queue.new }
 
   context "Свойства методов empty? и empty:" do
-    it "только что созданный стек является пустым" do
+    it "только что созданная очередь является пустой" do
       expect(queue.empty?).to be true
     end
 
@@ -27,7 +27,7 @@ describe Queue do
       expect { queue.dequeue }.to raise_error(RuntimeError, 'Queue is empty')
     end
 
-    it "у пустого стека ничего не лежит на вершине" do
+    it "у пустой очереди ничего нет в начале" do
       expect { queue.front }.to raise_error(RuntimeError, 'Queue is empty')
     end
 
@@ -36,6 +36,10 @@ describe Queue do
       Queue::DEF_SIZE.times { queue.enqueue(85) }
       expect { queue.enqueue(17) }.to raise_error(RuntimeError, 'Queue is full')
     end
+  end
+
+  context "Особенности кольцевой реализации" do
+
   end
 
   context "Особенности дисциплины обслуживания FIFO:" do

@@ -3,7 +3,6 @@ class FrNat
   DEF_MAX = 20
 
   def initialize(max = DEF_MAX)
-    @num = 0
     @max = max
     empty
   end

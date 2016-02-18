@@ -5,7 +5,7 @@ describe Deck do
   let(:deck) { Deck.new }
 
   context "Свойства методов empty? и empty:" do
-    it "только что созданный стек является пустым" do
+    it "только что созданная колода является пустой" do
       expect(deck.empty?).to be true
     end
 
@@ -14,20 +14,20 @@ describe Deck do
       expect(deck.empty?).to be false
     end
 
-    it "после вызова метода empty дэк становится пустой" do
+    it "после вызова метода empty колода становится пустой" do
       deck. push_back(17)
       deck.empty
       expect(deck.empty?).to be true
     end
   end
 
-  context "Особенности работы с пустой и полностью заполненной дэкой:" do
-    it "из пустой дэки нельзя ничего извлечь" do
+  context "Особенности работы с пустой и полностью заполненной колодой:" do
+    it "из пустой колоды нельзя ничего извлечь" do
       expect { deck.pop_front }.to raise_error(RuntimeError, 'Deck is empty')
       expect { deck.back }.to raise_error(RuntimeError, 'Deck is empty')
     end
 
-    it "у пустого дэка ничего не лежит на вершине" do
+    it "у пустой колоды ничего не лежит сверху или снизу" do
       expect { deck.front }.to raise_error(RuntimeError, 'Deck is empty')
     end
 
@@ -42,7 +42,7 @@ describe Deck do
       deck.empty
       Deck::DEF_SIZE.times { deck.push_front(85) }
       expect { deck.push_front(17) }.to raise_error(RuntimeError, 'Deck is full')
-      expect { deck.push_front(17) }.to raise_error(RuntimeError, 'Deck is full')
+      expect { deck.push_back(17) }.to raise_error(RuntimeError, 'Deck is full')
     end
   end
 
