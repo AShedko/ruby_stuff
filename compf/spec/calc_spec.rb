@@ -3,8 +3,8 @@ require_relative '../calc'
 
 describe 'Калькулятор' do
   let(:calc) { Calc.new }
-  
-  context 'сложение' do 
+
+  context 'сложение' do
     it  '1+2=3' do
       expect(calc.compile('1+2')).to eq 3
     end
@@ -19,14 +19,14 @@ describe 'Калькулятор' do
 
     it  '(1+(2+3)+4)=10' do
       expect(calc.compile('(1+(2+3)+4)')).to eq 10
-    end    
+    end
   end
 
   context 'вычитание' do
     it '1-2=-1' do
       expect(calc.compile('1-2')).to eq -1
     end
-    
+
     it '5-2=3' do
       expect(calc.compile('5-2')).to eq 3
     end
@@ -34,7 +34,7 @@ describe 'Калькулятор' do
     it '1-2-3-4-5-6=-19' do
       expect(calc.compile('1-2-3-4-5-6')).to eq -19
     end
-    
+
     it '(1-2)-(3-4)=0' do
       expect(calc.compile('(1-2)-(3-4)')).to eq 0
     end
@@ -91,11 +91,11 @@ describe 'Калькулятор' do
     it '((((1-2))))=-1' do
       expect(calc.compile('((((1-2))))')).to eq -1
     end
-    
+
     it '(1+4)*7=35' do
       expect(calc.compile('(1+4)*7')).to eq 35
     end
-    
+
     it '1+(4*7)=29' do
       expect(calc.compile('1+(4*7)')).to eq 29
     end
@@ -103,15 +103,15 @@ describe 'Калькулятор' do
     it '7*(8)/4=14' do
       expect(calc.compile('7*(8)/4')).to eq 14
     end
-    
+
     it '4/8*7=0' do
       expect(calc.compile('4/8*7')).to eq 0
     end
-    
+
     it '5/3*2=2' do
       expect(calc.compile('5/3*2')).to eq 2
     end
-    
+
     it '5/(3*2)=0' do
       expect(calc.compile('5/(3*2)')).to eq 0
     end
@@ -137,7 +137,7 @@ describe 'Калькулятор' do
       test = '((1+(1*(1+(1+1/1)))))/(1+1)'
       expect(calc.compile(test)).to eq eval(test)
     end
-  
+
   end
 
 end

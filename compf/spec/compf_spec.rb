@@ -3,17 +3,17 @@ require_relative '../compf'
 
 describe 'Компилятор формул' do
   let(:compf) { Compf.new }
-  
+
   context 'один символ' do
     it 'a -> a' do
       expect(compf.compile('a')).to eq 'a'
     end
-    
+
     it '+ -> +' do
       expect(compf.compile('+')).to eq '+'
     end
   end
-  
+
   context 'допустимые операции' do
     it 'a+b -> a b +' do
       expect(compf.compile('a+b')).to eq 'a b +'
@@ -27,6 +27,12 @@ describe 'Компилятор формул' do
     it 'a/b -> a b /' do
       expect(compf.compile('a/b')).to eq 'a b /'
     end
+    it 'a>>b -> a b R' do
+      expect(compf.compile('a>>b')).to eq 'a b R'
+    end
+    it 'a<<b -> a b L' do
+      expect(compf.compile('a>>b')).to eq 'a b L'
+    end
   end
 
   context 'порядок операций' do
@@ -39,7 +45,19 @@ describe 'Компилятор формул' do
     end
 
     it 'a*(b/c) -> a c b / *' do
-      expect(compf.compile('a*(b/c)')).to eq 'a b c / *' 
+      expect(compf.compile('a*(b/c)')).to eq 'a b c / *'
+    end
+
+    it 'a+(b>>c) -> a c b R +' do
+      expect(compf.compile('a+(b>>c)')).to eq 'a b c R +'
+    end
+
+    it 'a*b<<c -> a b * c L' do
+      expect(compf.compile('a*b<<c')).to eq 'a b * c L'
+    end
+
+    it 'a+c*b>>d -> a c b d * + R' do
+      expect(compf.compile('a+c*b')).to eq 'a c b * +'
     end
   end
 
@@ -48,7 +66,7 @@ describe 'Компилятор формул' do
       expect(compf.compile('(a)')).to eq 'a'
     end
 
-    it '(((((a)))) -> a' do 
+    it '(((((a)))) -> a' do
       expect(compf.compile('(((((a))))')).to eq 'a'
     end
 
@@ -69,7 +87,7 @@ describe 'Компилятор формул' do
     it 'c*(c+c+c+c/(c-c-c-c)) -> c c c + c + c c c - c c - / *' do
       expect(compf.compile('c*(c+c+c+c/(c-c-c-c))')).to eq 'c c c + c + c c c - c - c - / + *'
     end
-    
+
     it 'a/b*c+d*e/(f+g) -> a b / c * d e * f g + / +' do
       expect(compf.compile('a/b*c+d*e/(f+g)')).to eq 'a b / c * d e * f g + / +'
     end
