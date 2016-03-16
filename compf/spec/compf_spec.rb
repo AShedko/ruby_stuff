@@ -31,7 +31,7 @@ describe 'Компилятор формул' do
       expect(compf.compile('a>>b')).to eq 'a b R'
     end
     it 'a<<b -> a b L' do
-      expect(compf.compile('a>>b')).to eq 'a b L'
+      expect(compf.compile('a<<b')).to eq 'a b L'
     end
   end
 
@@ -77,6 +77,10 @@ describe 'Компилятор формул' do
     it '(((((((a+b)*((a+b))))))) -> a b + a b + *' do
       expect(compf.compile('(((((((a+b)*((a+b)))))))')).to eq 'a b + a b + *'
     end
+
+    it '((((a)>>b))) -> a b R' do
+      expect(compf.compile('((((a)>>b)))')).to eq 'a b R'
+    end
   end
 
   context 'выражения' do
@@ -107,6 +111,15 @@ describe 'Компилятор формул' do
     it 'c+(c+(c*(c+(c/(c*(c+c)))))) -> c c c c c c c + * / + * + +' do
       expect(compf.compile('c+(c+(c*(c+(c/(c*(c+c))))))')).to eq 'c c c c c c c c + * / + * + +'
     end
+
+    it 'c-c+(c>>(c*(c<<(c/(c*(c<<c)))))) -> c c - c c c c c c c L * / L * R +' do
+      expect(compf.compile('c-c+(c>>(c*(c<<(c/(c*(c<<c))))))')).to eq 'c c - c c c c c c c L * / L * R +'
+    end
+
+    it '(a+b>>c)<<(d/y)*z -> a b + c R d y / z * L' do
+      expect(compf.compile('(a+b>>c)<<(d/y)*z')).to eq 'a b + c R d y / z * L'
+    end
+
   end
 
 end

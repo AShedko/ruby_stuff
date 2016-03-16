@@ -83,6 +83,24 @@ describe 'Калькулятор' do
     end
   end
 
+  context "Bitshifts" do
+    it "9>>1>>1>>1=1" do
+      expect(calc.compile("9>>1>>1>>1")).to eq 1
+    end
+
+    it '1>>0=1' do
+      expect(calc.compile('1>>0')).to eq 1
+    end
+
+    it '1<<10=1024' do
+      expect(calc.compile('1<<9')).to eq 512
+    end
+
+    it '1<<1<<3<<2=64' do
+      expect(calc.compile('1<<1<<3<<2')).to eq 64
+    end
+  end
+
   context 'скобки и приоритеты' do
     it '(1-2)=-1' do
       expect(calc.compile('(1-2)')).to eq -1
@@ -115,6 +133,18 @@ describe 'Калькулятор' do
     it '5/(3*2)=0' do
       expect(calc.compile('5/(3*2)')).to eq 0
     end
+
+    it '1+4*8>>3=5' do
+      expect(calc.compile('1+4*8>>3')).to eq 5
+    end
+
+    it '3+1*3<<2=24' do
+      expect(calc.compile("3+1*3<<2")).to eq 24
+    end
+
+    it '5/2<<7+1=512' do
+      expect(calc.compile("5/2<<7+1")).to eq 512
+    end
   end
 
   context 'выражения' do
@@ -138,6 +168,13 @@ describe 'Калькулятор' do
       expect(calc.compile(test)).to eq eval(test)
     end
 
+    it '((7-3)/5-4>>2)/3<<2=-4' do
+      expect(calc.compile('((7-3)/5-4>>2)/3<<2')).to eq (-4)
+    end
+
+    it '((7>>2-1)+5*(9/4<<1)+6)>>3<<1=6' do
+      expect(calc.compile('((7>>2-1)+5*(9/4<<1)+6)>>3<<1')).to eq 6
+    end
   end
 
 end

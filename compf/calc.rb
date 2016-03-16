@@ -2,10 +2,19 @@
 require_relative 'compf'
 #
 # Интерпретатор арифметических выражений вычисляет значения
-# правильных арифметических формул, в которых в качестве 
+# правильных арифметических формул, в которых в качестве
 # операндов допустимы только цифры /^[0-9]$/
-# 
+#
 class Calc < Compf
+
+  CONV_TABLE = {'R'=>">>" ,
+                'L'=>"<<",
+                "+"=>"+",
+                "-"=>"-",
+                "/"=>"/",
+                "*"=>"*"
+              }
+
   def initialize
     # Вызов метода initialize класса Compf
     super
@@ -21,6 +30,11 @@ class Calc < Compf
 
   private
 
+  #Приоритет операций
+  def priority(c)
+    (c == '+' or c == '-') ? 1 : c=='L' ? 0 : (c=='R') ? 3 : 2
+  end
+
   # Проверка допустимости символа
   def check_symbol(c)
     raise "Недопустимый символ '#{c}'" if c !~ /[0-9]/
@@ -34,7 +48,7 @@ class Calc < Compf
   # Заключительная обработка символа операции
   def process_oper(c)
     second, first = @s.pop, @s.pop
-    @s.push(first.method(c).call(second))
+    @s.push(first.method(CONV_TABLE[c]).call(second))
   end
 end
 

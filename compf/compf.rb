@@ -59,7 +59,7 @@ class Compf < Stack
       SYM_LEFT
     when ')'
       SYM_RIGHT
-    when '+', '-', '*', '/','<','>'
+    when '+', '-', '*', '/','<','>','L','R'
       SYM_OPER
     else
       check_symbol(c)
@@ -87,6 +87,7 @@ class Compf < Stack
         @op+=c
         process_suspended_operators(CONV_TABLE[@op])
         push(CONV_TABLE[@op])
+        @op=""
       end
     when SYM_OTHER
       process_value(c)
