@@ -170,6 +170,6 @@ class Polyedr
         s
       end
     end
-    @s /= @c
+    @sum /= @c
   end
 end
