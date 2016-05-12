@@ -2,8 +2,8 @@
 require_relative './polyedr'
 require_relative '../common/tk_drawer'
 TkDrawer.create
-# %w(ccc mytest cube box king cow).each do |name|
-%w(mytest mytest0).each do |name|
+%w(ccc mytest mytest0 mytest1 cube box king).each do |name|
+# %w(mytest mytest0 mytest1).each do |name|
   puts '============================================================='
   puts "Начало работы с полиэдром '#{name}'"
   start_time = Time.now

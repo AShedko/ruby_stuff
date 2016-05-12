@@ -90,4 +90,12 @@ describe Polyedr do
       expect(fig.sum).to be_within(EPS).of(0)
     end
   end
+
+   context "More examples" do
+     let(:fig){Polyedr.new("../data/mytest1.geom")}
+     it "Sum of perimeters" do
+       fig.draw
+       expect(fig.sum).to be_within(EPS).of(800+Math.sqrt(8*8+4)*40+2*40+8*40)
+     end
+   end
 end

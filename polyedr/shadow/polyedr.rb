@@ -162,7 +162,7 @@ class Polyedr
     end
     facets.each{|f| edges.each{|e| f.edges<<e if f.fac_edge?(e)}}
     @sum = facets.inject(0) do |s,f|
-      if f.part_vis? && f.outside_sqr?(@alpha,@beta,@gamma,@c)
+      if f.part_vis? && f.outside_sqr?(@alpha,@beta,@gamma,@c)    
         TkDrawer.draw_point(f.center)
         sleep(0.1)
         s += f.perimeter
