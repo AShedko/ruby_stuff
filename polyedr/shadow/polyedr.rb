@@ -124,10 +124,9 @@ class Facet
   end
 
   # центр грани вне единичного квадрата
-  def outside_sqr?
+  def outside_sqr?(alpha,gamma,beta,c)
     cent = center
-    p @gamma,@beta,@alpha,@c
-    cent = cent.rz(- @gamma).ry(- @beta).rz(- @alpha)/@c
+    cent = cent.rz(-gamma).ry(-beta).rz(-alpha)*(1/c)
     (cent.x>0.5||cent.x<-0.5)&&(cent.y>0.5||cent.y<-0.5)
   end
 
@@ -163,7 +162,7 @@ class Polyedr
     end
     facets.each{|f| edges.each{|e| f.edges<<e if f.fac_edge?(e)}}
     @sum = facets.inject(0) do |s,f|
-      if f.part_vis? && f.outside_sqr?
+      if f.part_vis? && f.outside_sqr?(@alpha,@beta,@gamma,@c)
         TkDrawer.draw_point(f.center)
         sleep(0.1)
         s += f.perimeter
