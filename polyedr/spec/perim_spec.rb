@@ -35,9 +35,8 @@ end
 
 describe Polyedr do
 
-  let(:fig){Polyedr.new("../data/mytest.geom")}
-
   context "Visibility" do
+    let(:fig){Polyedr.new("../data/mytest.geom")}
 
     it "perimeter" do
       fig.draw
@@ -53,10 +52,42 @@ describe Polyedr do
       expect(fig.facets.all?{|f| f.part_vis?}).to be false
     end
 
-    it "all edges of a non-part_vis facet are either complitely visible or complitely invisible" do
+    it "All edges of a non-part_vis facet are either complitely visible or complitely invisible" do
       fig.draw
       fig.facets[0].part_vis? ? temp = fig.facets[1] : temp = fig.facets[0]
       expect(temp.edges.all?{|e| e.compl_visible?||e.invisible?}).to be true
+    end
+  end
+
+  context "Center inside a square" do
+# ____________________
+# |  _______________  |
+# | |               | |
+# | |               | |
+# | |               | |
+# | |               | |
+# | |       1       | |
+# | |    (-1.75,-3) | |_____
+# | |     3.5x6     | |___  |
+# | |               | |   | |
+# | |_______________| |   | |
+# |___________________|   | |
+#            | |     0----| |----->x
+#            | |   (0,0)  | |
+#            | |    1x1   | |
+#            | |__________| |
+#            |______________|
+
+    let(:fig){Polyedr.new("../data/mytest0.geom")}
+    it "Facet center projection is inside a unit square" do
+      fig.draw
+      expect(fig.facets[0].outside_sqr?(fig.alpha,fig.beta,fig.gamma,fig.c)).to be false
+      expect(fig.facets[1].outside_sqr?(fig.alpha,fig.beta,fig.gamma,fig.c)).to be true
+    end
+
+    it "In this case the sum is zero even though there is a partially visible facet" do
+      fig.draw
+      expect(fig.sum).to be_within(EPS).of(0)
     end
   end
 end

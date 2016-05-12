@@ -63,7 +63,7 @@ end
 # Полиэдр
 class Polyedr
   # Массивы рёбер и граней
-  attr_reader :edges, :facets
+  attr_reader :edges, :facets, :alpha, :beta, :gamma, :c
   def initialize(file)
     # файл, задающий полиэдр
     File.open(file, 'r') do |f|
