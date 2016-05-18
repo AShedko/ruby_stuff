@@ -2,6 +2,15 @@
 class R2Point
   attr_reader :x, :y
 
+  private
+
+  D = {[0,0] => 0, # таблица перевода ближайшей
+       [1,0] => 3, # к концу отрезка вершины прямоугольника
+       [0,1] => 1,
+       [1,1] => 2
+  }
+
+  public
   # конструктор
   def initialize(x = input("x"), y = input("y"))
     @x, @y = x, y
@@ -27,11 +36,22 @@ class R2Point
     case (p1 - p2)%4
       #  Концы отрезка в одной четверти
     when 0
-      return [self.dist_segm(rect[(p1-1)%4],rect[p1]),
-              endp.dist_segm(rect[(p1-1)%4],rect[p1]),
-              self.dist_segm(rect[(p1+1)%4],rect[p1]),
-              endp.dist_segm(rect[(p1+1)%4],rect[p1]),
-              rect[p1].dist_segm(self,endp)].min
+      #  Необходимо отсортировать концы отрезка для ускоренияработы программы
+      self.x<=endp.x? l,r = self,endp : l,r = endp,self
+      if p1 == 1 || p1 == 2
+        return [l.dist_segm(rect[(p1-1)%4],rect[p1]),
+                r.dist_segm(rect[(p1+1)%4],rect[p1]),
+                rect[p1].dist_segm(self,endp)].min
+      else
+        return [r.dist_segm(rect[(p1-1)%4],rect[p1]),
+                l.dist_segm(rect[(p1+1)%4],rect[p1]),
+                rect[p1].dist_segm(self,endp)].min
+      end
+      # return [self.dist_segm(rect[(p1-1)%4],rect[p1]),
+      #         endp.dist_segm(rect[(p1-1)%4],rect[p1]),
+      #         self.dist_segm(rect[(p1+1)%4],rect[p1]),
+      #         endp.dist_segm(rect[(p1+1)%4],rect[p1]),
+      #         rect[p1].dist_segm(self,endp)].min
     when 1, 3 #Концы отрезка в соседних четвертях
       return [self.dist(rect[p1]),endp.dist(rect[p2]),
               rect[p1].dist_segm(self,endp),
@@ -60,7 +80,6 @@ class R2Point
     # Liang, Y.D., and Barsky, B., "A New Concept and Method for Line Clipping",
     # ACM Transactions on Graphics, 3(1):1-22, January 1984.
     l,r = endp,self
-    # p l,r
     dx, dy = r.x - l.x, r.y - l.y
     q = [l.x-a.x,b.x-l.x,l.y-a.y,b.y-l.y]
     p = [-dx,dx,-dy,dy]
@@ -150,13 +169,6 @@ class R2Point
   def == (other)
     @x == other.x and @y == other.y
   end
-
-  private
-  D = {[0,0] => 0, # таблица перевода ближайшей
-       [1,0] => 3, # к концу отрезка вершины прямоугольника
-       [0,1] => 1,
-       [1,1] => 2
-  }
 
   def input(prompt)
     print "#{prompt} -> "
